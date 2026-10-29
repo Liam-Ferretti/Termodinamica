@@ -1,0 +1,53 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {chapter}{\numberline {1}Informazioni sul Corso}{5}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Fondamenti della Termodinamica}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}I principi della termodinamica}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Approcci alla termodinamica}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Sistemi termodinamici}{7}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Tipologie di sistemi termodinamici}{8}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}Trasformazioni termodinamiche}{9}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Termometria}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Principio zero della termodinamica}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Limiti della misura}{11}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Caratteristiche di un termometro}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Scale termometriche}{12}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Scala Celsius [1742]}{12}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Scala Fahrenheit}{12}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Scala assoluta (Kelvin, o del gas perfetto)}{13}{subsection.3.3.3}%
+\contentsline {chapter}{\numberline {4}Gas Perfetti e Gas Reali}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Gas perfetti}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Gas reali}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Limite di gas perfetto e diagramma di fase}{16}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Ancora sulle proprietà dei termometri}{17}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Lavoro, Calore e Primo Principio}{19}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Lavoro in una trasformazione termodinamica}{19}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Lavoro in una trasformazione quasi-statica}{20}{subsection.5.1.1}%
+\contentsline {section}{\numberline {5.2}Dilatazione termica}{21}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Calore}{21}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Assiomi della termodinamica}{21}{subsection.5.3.1}%
+\contentsline {section}{\numberline {5.4}Primo principio della termodinamica}{22}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Il mulinello di Joule}{22}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Enunciato}{22}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Applicazioni: calorimetria e calore specifico}{23}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Trasformazioni dei gas perfetti}{23}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Trasformazione adiabatica}{23}{subsection.5.5.1}%
+\contentsline {paragraph}{Adiabatica reversibile.}{23}{section*.8}%
+\contentsline {paragraph}{Adiabatica irreversibile.}{23}{section*.9}%
+\contentsline {subsection}{\numberline {5.5.2}Trasformazioni politropiche}{24}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Trasformazione isoterma reversibile}{24}{subsection.5.5.3}%
+\contentsline {chapter}{\numberline {6}Teoria Cinetica dei Gas}{27}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Interpretazione microscopica delle grandezze termodinamiche}{27}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Pressione}{27}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Temperatura}{28}{subsection.6.1.2}%
+\contentsline {chapter}{\numberline {7}Secondo Principio della Termodinamica}{29}{chapter.7}%
+\contentsline {section}{\numberline {7.1}A cosa serve il secondo principio}{29}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Processi irreversibili}{29}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Enunciati del secondo principio}{30}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Equivalenza degli enunciati}{31}{subsection.7.3.1}%
+\contentsline {paragraph}{$\neg C \DOTSB \tmspace +\thickmuskip {.2777em}\DOTSB \Relbar \joinrel \Rightarrow \tmspace +\thickmuskip {.2777em}\neg KP$.}{31}{section*.13}%
+\contentsline {paragraph}{$\neg KP \DOTSB \tmspace +\thickmuskip {.2777em}\DOTSB \Relbar \joinrel \Rightarrow \tmspace +\thickmuskip {.2777em}\neg C$.}{31}{section*.15}%
+\contentsline {section}{\numberline {7.4}Il ciclo di Carnot}{32}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Rendimento di una macchina termica}{32}{subsection.7.4.1}%
+\contentsline {chapter}{\numberline {8}Miscele di Gas}{35}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Legge di Dalton}{35}{section.8.1}%

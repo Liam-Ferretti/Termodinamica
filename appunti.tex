@@ -1,0 +1,1046 @@
+\documentclass[11pt, a4paper, openright]{book}
+
+\usepackage{bm}
+\usepackage[italian]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\usepackage{caption}
+\captionsetup{justification=centering}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage{yhmath}
+\usepackage{derivative}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, decorations.markings, arrows.meta}
+
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% =================================================================
+% DEFINIZIONE DEGLI AMBIENTI MATEMATICI (amsthm)
+% =================================================================
+
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{lemma}[teorema]{Lemma}
+\newtheorem{corollario}[teorema]{Corollario}
+\newtheorem{proposizione}[teorema]{Proposizione}
+\newtheorem{postulato}[teorema]{Postulato}
+
+\theoremstyle{definition}
+\newtheorem{definizione}[teorema]{Definizione}
+\newtheorem{esempio}[teorema]{Esempio}
+\newtheorem{esercizio}[teorema]{Esercizio}
+
+\theoremstyle{remark}
+\newtheorem{osservazione}[teorema]{Osservazione}
+
+\newcommand{\innerprod}[2]{\langle #1, #2 \rangle}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{4cm}
+
+    \Huge
+    \textbf{Corso di Termodinamica e Laboratorio}
+
+    \vspace{0.5cm}
+    \LARGE
+    Appunti ed Esempi
+
+    \vspace{1.5cm}
+
+    \textit{Basato sulle lezioni di} \\
+    \Large \textbf{Prof. Eugenio Del Re e Prof. Michele Marrocco}
+
+    \vfill
+
+    \rule{\linewidth}{0.5pt}
+    \vspace{0.5cm}
+
+    \large
+    Autore: \textbf{Liam Ferretti} \\
+    \today
+
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Informazioni sul Corso}
+\begin{itemize}
+    \item Il materiale e le comunicazioni del corso sono su Google Classroom (codice: \texttt{cprja4um}).
+    \item \textbf{Laboratorio}: è obbligatorio compilare la presenza. Si lavora in gruppi da 4; ogni esperienza prevede una relazione di gruppo (massimo 8 pagine). Due esperienze di gruppo sono senza relazione.
+    \item \textbf{Voto finale}: media tra scritto, orale e relazioni (le relazioni vengono discusse all'orale).
+    \item Contatti: \texttt{valeria.gilberti@uniroma1.it}, \texttt{michele.marrocco@uniroma1.it}.
+\end{itemize}
+
+\chapter{Fondamenti della Termodinamica}
+La \textbf{termodinamica classica} nasce come disciplina prevalentemente sperimentale ed empirica, sviluppata tra il '700 e l'800: studia le proprietà fisiche dei sistemi in relazione allo scambio di calore (e lavoro).
+
+\section{I principi della termodinamica}
+\begin{itemize}
+    \item \textbf{Principio 0} [1931]: fondamento della termometria e della termologia.
+    \item \textbf{Principio 1} [$\simeq 1850$]: regola gli scambi di calore e lavoro; corrisponde al principio di conservazione dell'energia e completa la termologia e la calorimetria.
+    \item \textbf{Principio 2} [Clausius, Kelvin]: introduce l'entropia e spiega il verso delle trasformazioni.
+    \item \textbf{Principio 3} [$\sim 1910$, Nernst]: fissa lo zero dell'entropia.
+\end{itemize}
+
+\begin{osservazione}[Il problema del corpo nero]
+    Il problema del corpo nero, da cui nasce la meccanica quantistica, è in origine un problema termodinamico: lo studio dell'entropia di un gas di fotoni.
+\end{osservazione}
+
+\section{Approcci alla termodinamica}
+\begin{itemize}
+    \item \textbf{Approccio microscopico}: si studiano le interazioni a livello microscopico e da esse l'evoluzione degli stati. In una mole però si hanno $\sim 6 \cdot 10^{23}$ particelle, il che rende impraticabile lo studio dell'evoluzione del sistema.
+    \item \textbf{Approccio statistico}: si lavora con valori medi $\langle x \rangle$ delle grandezze microscopiche (meccanica statistica).
+    \item \textbf{Approccio empirico / macroscopico}: si usano grandezze fisiche misurabili, indipendenti dal modello teorico microscopico. È l'approccio della termodinamica classica.
+\end{itemize}
+
+\section{Sistemi termodinamici}
+\begin{definizione}[Sistema termodinamico]
+    Un sistema termodinamico (o \emph{fluido} della termodinamica) è un corpo macroscopico, contenuto in un volume ben definito, in grado di scambiare calore e lavoro (pressione) con sorgenti e pozzi.
+\end{definizione}
+
+Le grandezze che lo descrivono sono:
+\begin{itemize}
+    \item \textbf{Volume} $V$: lo spazio occupato dal sistema, che è contenuto in un ambiente. Il volume è suddivisibile in sottovolumi ben definiti, che permettono una misura \emph{locale} di $T$ e $P$.
+    \item \textbf{Pressione}:
+    \begin{equation}
+        P = \frac{F_\perp}{S}
+    \end{equation}
+    dove $F_\perp$ è la componente della forza normale alla superficie $S$ che delimita il volume.
+    \item \textbf{Temperatura} $T$: non è definibile in modo banale; rappresenta il nostro modo di comprendere la possibilità di scambiare calore. Per definirla bisogna introdurre delle \emph{grandezze termometriche}, ad esempio la variazione di volume di un corpo in funzione di $\Delta T$.
+\end{itemize}
+
+\subsection{Tipologie di sistemi termodinamici}
+\begin{itemize}
+    \item \textbf{Sistema isolato}: non scambia né energia né massa con l'ambiente.
+    \item \textbf{Sistema aperto}: scambia sia materia sia energia (es. un recipiente aperto posto su una sorgente di calore).
+    \item \textbf{Sistema chiuso}: non scambia massa, ma scambia energia, sia meccanica (es. tramite un pistone) sia termica (tramite una sorgente). Esempio: il pianeta Terra.
+\end{itemize}
+
+\begin{osservazione}
+    Negli appunti scritti a mano il sistema che non scambia né energia né massa è indicato come ``chiuso''; la nomenclatura standard lo chiama \emph{isolato}, riservando ``chiuso'' al sistema che scambia solo energia.
+\end{osservazione}
+
+La differenza tra i vari casi sta nella natura delle \textbf{pareti}:
+\begin{itemize}
+    \item parete \textbf{adiabatica}: impermeabile al calore (sistema isolato termicamente);
+    \item parete \textbf{diatermica}: trasparente al calore.
+\end{itemize}
+
+\begin{definizione}[Sorgenti e pozzi]
+    \begin{itemize}
+        \item \textbf{Sorgente}: corpo capace di fornire energia meccanica o calore.
+        \begin{itemize}
+            \item Sorgenti meccaniche: molle, pesi, \dots
+            \item Sorgenti di calore (\emph{termostati}): forniscono calore mantenendo la propria temperatura iniziale. Se la temperatura cambia, la sorgente va pensata come una successione di infinite sorgenti a temperature diverse.
+        \end{itemize}
+        \item \textbf{Pozzo}: corpo capace di assorbire energia meccanica o calore. Vale la stessa logica delle sorgenti, ma invertita.
+    \end{itemize}
+\end{definizione}
+
+\begin{definizione}[Universo termodinamico]
+    L'insieme del sistema termodinamico e di tutte le sorgenti e i pozzi con cui interagisce costituisce l'\emph{universo termodinamico}.
+\end{definizione}
+
+\begin{definizione}[Equilibrio termodinamico]
+    Un sistema è in equilibrio termodinamico se, dopo l'azione di una perturbazione, torna alla condizione iniziale:
+    \begin{equation}
+        (P, V, T) \longrightarrow (P_{eq}, V_{eq}, T_{eq})
+    \end{equation}
+    L'equilibrio termodinamico richiede contemporaneamente:
+    \begin{itemize}
+        \item equilibrio \textbf{meccanico} ($P_{int} = P_{est}$),
+        \item equilibrio \textbf{termico} ($T_{int} = T_{sorgente}$),
+        \item equilibrio \textbf{chimico} (non devono avvenire cambiamenti chimici).
+    \end{itemize}
+    È una rappresentazione \emph{macroscopica}.
+\end{definizione}
+
+\begin{definizione}[Regola delle fasi di Gibbs]
+    Il numero di parametri intensivi indipendenti (gradi di libertà) di un sistema all'equilibrio è:
+    \begin{equation}
+        N = C + 2 - F
+    \end{equation}
+    dove $C$ è il numero di specie chimiche e $F$ il numero di fasi. Per un sistema con una sola specie in una sola fase si hanno quindi 2 parametri indipendenti, tipicamente $P$ e $T$.
+\end{definizione}
+
+\section{Trasformazioni termodinamiche}
+\begin{definizione}[Trasformazione termodinamica]
+    Una trasformazione termodinamica rappresenta il cambiamento di stato termodinamico di un sistema dovuto alla variazione dei parametri termodinamici (i parametri individuano gli stati).
+\end{definizione}
+Le trasformazioni si dividono in:
+\begin{itemize}
+    \item \textbf{Reversibili}: è possibile definire i valori di $(P, V, T)$ in ogni istante, perché il sistema passa per una successione di stati di equilibrio (quasi-statici). Richiedono un tempo infinito, quindi sono un'idealizzazione: le trasformazioni reversibili non esistono, si realizzano solo approssimativamente con trasformazioni molto lente.
+    \item \textbf{Irreversibili}: trasformazioni rapide, in cui il sistema passa per stati di non equilibrio, nei quali le variabili di stato non sono definite.
+\end{itemize}
+Le trasformazioni si rappresentano nel \textbf{piano di Clapeyron} $(V, P)$. Le trasformazioni reversibili si disegnano con linee continue; quelle irreversibili con linee ondulate (o tratteggiate), perché non è possibile individuare gli stati intermedi.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % isobara
+        \begin{scope}
+            \draw[->] (0,0) -- (3.5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3) node[left] {$P$};
+            \draw[thick] (0.8,2) -- (2.8,2);
+            \draw[decorate, decoration={snake, amplitude=0.6mm, segment length=2mm}] (0.8,1.4) -- (2.8,1.4);
+            \node at (1.8,-0.6) {Isobara};
+        \end{scope}
+        % isocora
+        \begin{scope}[xshift=4.5cm]
+            \draw[->] (0,0) -- (3.5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3) node[left] {$P$};
+            \draw[thick] (1.5,0.6) -- (1.5,2.5);
+            \draw[decorate, decoration={snake, amplitude=0.6mm, segment length=2mm}] (2.2,0.6) -- (2.2,2.5);
+            \node at (1.8,-0.6) {Isocora};
+        \end{scope}
+        % isoterma
+        \begin{scope}[xshift=9cm]
+            \draw[->] (0,0) -- (3.5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3) node[left] {$P$};
+            \draw[thick, domain=0.9:3, samples=40] plot (\x, {2/\x});
+            \draw[decorate, decoration={snake, amplitude=0.5mm, segment length=2mm}, domain=0.7:2.5, samples=40] plot (\x, {1.2/\x});
+            \node at (1.8,-0.6) {Isoterma};
+        \end{scope}
+        % adiabatica
+        \begin{scope}[xshift=13.5cm]
+            \draw[->] (0,0) -- (3.5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3) node[left] {$P$};
+            \draw[thick, domain=0.75:2.6, samples=40] plot (\x, {1.6/(\x^1.4)});
+            \draw[decorate, decoration={snake, amplitude=0.5mm, segment length=2mm}, domain=1.1:3.2, samples=40] plot (\x, {3/(\x^1.4)});
+            \node at (1.8,-0.6) {Adiabatica};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Trasformazioni notevoli nel piano di Clapeyron: linea continua = reversibile, linea ondulata = irreversibile.}
+\end{figure}
+
+\chapter{Termometria}
+\section{Principio zero della termodinamica}
+Il principio zero fornisce il fondamento delle misure termometriche. Ne esistono due formulazioni analoghe:
+\begin{enumerate}
+    \item Due corpi (uno caldo e uno freddo) messi a contatto raggiungono uno stato di equilibrio termico.
+    \item Due corpi $A$ e $B$ (uno caldo e uno freddo), separati da una parete adiabatica, messi a contatto separatamente con un terzo corpo, raggiungono ciascuno l'equilibrio con il terzo corpo. Rimuovendo poi la parete adiabatica e mettendo $A$ e $B$ a contatto, non si osserva alcuno scambio di calore:
+    \begin{equation}
+        T_A = T_B = T_{eq}
+    \end{equation}
+    Cioè l'equilibrio termico è una relazione transitiva: se $A$ è in equilibrio con $C$ e $B$ è in equilibrio con $C$, allora $A$ è in equilibrio con $B$.
+\end{enumerate}
+
+Il concetto di temperatura nasce da una visione antropica (caldo/freddo); ne segue che diverse tipologie di termometri possono fornire risultati diversi.
+
+\subsection{Limiti della misura}
+Un termometro messo a contatto con un sistema non restituisce la temperatura ``vera'' del corpo prima del contatto, ma la temperatura di equilibrio raggiunta da sistema e termometro insieme: dopo l'istante di contatto la temperatura del sistema diminuisce (o aumenta) e quella del termometro sale (o scende) finché le due convergono a $T_{eq}$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        \draw[->] (0,0) -- (7,0) node[below] {$t$};
+        \draw[->] (0,0) -- (0,4) node[left] {$T$};
+        \draw[thick] (0,3.2) -- (2,3.2) .. controls (3,2.6) and (4,2.3) .. (6.5,2.25);
+        \draw[thick] (0,1.1) -- (2,1.1) .. controls (3,1.9) and (4,2.2) .. (6.5,2.25);
+        \draw[dashed] (0,2.25) -- (6.5,2.25);
+        \draw[dashed] (2,0) -- (2,3.4);
+        \node[left] at (0,3.2) {$T_{sistema}$};
+        \node[left] at (0,2.25) {$T_{eq}$};
+        \node[left] at (0,1.1) {$T_{i, term}$};
+        \node[below] at (2,0) {contatto};
+    \end{tikzpicture}
+    \caption{Evoluzione delle temperature di sistema e termometro dopo il contatto.}
+\end{figure}
+La scelta del termometro dipende quindi dalle sue caratteristiche: in particolare deve avere una capacità termica trascurabile rispetto al sistema.
+
+\section{Caratteristiche di un termometro}
+\begin{itemize}
+    \item \textbf{Sensibilità}: $\frac{\Delta R}{\Delta T}$, dove $R$ è la grandezza termometrica letta; si vuole che a piccoli cambi di temperatura corrispondano grandi variazioni della lettura.
+    \item \textbf{Prontezza}: il tempo caratteristico $\tau$ dopo il quale il termometro fornisce misure accurate; si deve attendere almeno $5\tau$.
+    \item \textbf{Risoluzione}: la minima variazione di temperatura apprezzabile.
+    \item \textbf{Intervallo termometrico}: il range (min, max) in cui è possibile effettuare la misura.
+    \item \textbf{Precisione}: un termometro deve dare la stessa misura per un sistema termodinamico che non cambia tra una misura e l'altra.
+\end{itemize}
+
+\section{Scale termometriche}
+Si vuole una risposta lineare della grandezza termometrica alla temperatura.
+
+\subsection{Scala Celsius [1742]}
+Si realizza un termometro e se ne definisce l'intervallo termometrico tramite due punti fissi (metodo ``antico''):
+\begin{itemize}
+    \item ghiaccio fondente (acqua solida e liquida in equilibrio): $T = 0\,^\circ\text{C}$;
+    \item acqua in ebollizione (a pressione atmosferica): $T = 100\,^\circ\text{C}$.
+\end{itemize}
+Oggi si usa invece un unico punto fisso, il \textbf{punto triplo dell'acqua}, a $P_3 = 611\,\text{Pa}$ e $T_3 = 0.01\,^\circ\text{C} = 273.16\,\text{K}$. Supponendo una dipendenza lineare della grandezza termometrica $X$ dalla temperatura (ad esempio $V \propto T$ per i termometri a liquido), vale:
+\begin{equation}
+    T = T_3 \frac{X}{X_3}
+\end{equation}
+che per un termometro a gas a volume costante diventa:
+\begin{equation}
+    T = T_3 \frac{P}{P_3}
+\end{equation}
+
+\subsection{Scala Fahrenheit}
+Scala tipica dei paesi anglosassoni. Deriva dalla temperatura minima raggiungibile in laboratorio all'epoca e, come massimo, dalla temperatura del sangue (del cavallo), divise in 96 intervalli. La conversione è:
+\begin{equation}
+    T_F = 32 + \frac{9}{5} T_C
+\end{equation}
+\begin{osservazione}
+    Negli appunti a mano compare $\frac{5}{9}$: il coefficiente corretto per passare da Celsius a Fahrenheit è $\frac{9}{5}$ (infatti $100\,^\circ\text{C} = 212\,^\circ\text{F}$), mentre $T_C = \frac{5}{9}(T_F - 32)$.
+\end{osservazione}
+
+\subsection{Scala assoluta (Kelvin, o del gas perfetto)}
+Si basa sull'equazione di stato dei gas perfetti, in cui la temperatura deve essere espressa in kelvin:
+\begin{equation}
+    PV = nRT
+\end{equation}
+(i gas perfetti in realtà non esistono). La temperatura misura l'agitazione delle particelle, quindi è possibile definire uno \emph{zero assoluto}, cioè la temperatura alla quale le particelle sono ferme. La scala nasce dal lavoro di Carnot (1824), che dimostra che la massima efficienza di una macchina termica è indipendente dal fluido utilizzato.
+
+Per definire lo zero si usa un \textbf{termometro a gas perfetto a volume costante}: un bulbo contenente il gas, posto nel sistema, è collegato a un manometro a mercurio a U con un braccio mobile. Si alza o abbassa il braccio mobile in modo da riportare il livello del mercurio nel ramo collegato al bulbo sempre alla stessa tacca (volume costante) e si legge il dislivello $h$. Avendo già calibrato il sistema (ad esempio al punto triplo), si ha:
+\begin{equation}
+    T_x = T_3\frac{P}{P_3}, \qquad P = P_{amb} + \rho g h
+\end{equation}
+Tale termometro si usa per tarare gli altri termometri.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.85]
+        \draw (0,0) rectangle (3,2.5) node[pos=0.15, below right] {};
+        \node at (1.5,0.4) {\textsc{Sistema}};
+        \draw (1.2,1.5) circle (0.45) node {gas};
+        \draw (1.2,1.95) -- (1.2,3.3) -- (4,3.3) -- (4,1);
+        \draw (1.4,1.9) -- (1.4,3.1) -- (3.8,3.1) -- (3.8,1);
+        \draw (3.8,1) arc (180:360:1.2 and 0.8);
+        \draw (4,1) arc (180:360:1 and 0.6);
+        \draw (6.2,1) -- (6.2,3.8);
+        \draw (6,1) -- (6,3.8);
+        \fill[gray!40] (3.8,1) arc (180:360:1.2 and 0.8) -- (6.2,2.6) -- (6,2.6) -- (6,1) arc (360:180:1 and 0.6) -- (4,1.8) -- (3.8,1.8) -- cycle;
+        \draw[dashed] (3.6,1.8) -- (6.6,1.8);
+        \draw[<->] (6.5,1.8) -- (6.5,2.6) node[midway, right] {$h$};
+        \draw[->] (6.1,4.4) -- (6.1,3.9) node[pos=0, above] {$P_{amb}$};
+        \node[right] at (6.6,3.4) {braccio mobile};
+    \end{tikzpicture}
+    \caption{Schema del termometro a gas a volume costante.}
+\end{figure}
+
+Effettuando misure di temperatura con gas diversi e con diverse quantità di gas (quindi diverse pressioni $P_3$ al punto triplo), le rette $P(t)$ ottenute, estrapolate (nella zona a basse temperature il gas liquefà e non si possono fare misure dirette), convergono tutte nello stesso punto:
+\begin{equation}
+    T_{0, \text{assoluto}} = -273.15\,^\circ\text{C}
+\end{equation}
+Ne segue che il passo della scala Kelvin è:
+\begin{equation}
+    1\,\text{K} = \frac{T_3}{273.16}
+\end{equation}
+cioè l'ampiezza del grado è la stessa della scala Celsius. Si definisce allora la \textbf{temperatura assoluta} come:
+\begin{equation}
+    T = \left(\lim_{P_3 \to 0} T_3\frac{P}{P_3}\right)\,\text{K}
+\end{equation}
+Il limite è necessario perché, misurando ad esempio la temperatura di ebollizione dell'acqua con gas diversi, si ottengono valori leggermente diversi (tra circa $373.10$ e $373.50\,\text{K}$) che convergono tutti allo stesso valore ($\simeq 373.12\,\text{K}$) per $P_3 \to 0$, cioè nel limite in cui il gas si comporta da gas perfetto.
+
+\begin{osservazione}
+    Con la scala internazionale ITS-90 la temperatura di ebollizione dell'acqua a pressione atmosferica non è esattamente $100\,^\circ\text{C}$, ma $\simeq 99.97\,^\circ\text{C}$.
+\end{osservazione}
+
+\chapter{Gas Perfetti e Gas Reali}
+Per $P \to 0$ e $T \gg T_{critica}$ i gas reali tendono a comportarsi come gas perfetti.
+
+\section{Gas perfetti}
+Un gas perfetto è un gas che rispetta l'equazione di stato:
+\begin{equation}
+    PV = nRT, \qquad R = 8.314\,\frac{\text{J}}{\text{mol}\,\text{K}} = N_A k_B
+\end{equation}
+Per un gas reale si definisce il \textbf{fattore di compressibilità} $\frac{PV}{nRT}$, che per un gas ideale vale 1, mentre per un gas reale si può sviluppare in serie (sviluppo del viriale):
+\begin{equation}
+    \frac{PV}{nRT} \simeq 1 + B(T)P + C(T)P^2 + \dots
+\end{equation}
+Al crescere della pressione il fattore di compressibilità prima scende sotto 1 (minimo intorno a qualche centinaio di atmosfere) e poi cresce. Per $P \lesssim 10\,\text{atm}$ i gas si avvicinano molto ai gas perfetti.
+
+\section{Gas reali}
+Un gas reale a pressioni ambientali segue con buona approssimazione l'\textbf{equazione di Van der Waals}:
+\begin{equation}
+    \left(P + \frac{an^2}{V^2}\right)\left(V - nb\right) = nRT
+\end{equation}
+I termini $\frac{an^2}{V^2}$ (attrazione tra le molecole) e $nb$ (volume proprio delle molecole) descrivono le interazioni intermolecolari, che derivano dal \textbf{potenziale di Lennard-Jones}: fortemente repulsivo a piccole distanze ($r < d_{min}$) e debolmente attrattivo a distanze maggiori.
+\begin{equation}
+    U(r) = 4\varepsilon\left[\left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^{6}\right]
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1]
+        \draw[->] (0,0) -- (6,0) node[below] {$r$};
+        \draw[->] (0,-1.5) -- (0,3) node[left] {$U(r)$};
+        \draw[thick, domain=0.94:2.9, samples=150] plot ({2*\x}, {4*((1/\x)^12 - (1/\x)^6)});
+        \draw[dashed] (1.86,-1.5) -- (1.86,3);
+        \node[below] at (1.86,-1.5) {$d_{min}$};
+    \end{tikzpicture}
+    \caption{Andamento qualitativo del potenziale di Lennard-Jones.}
+\end{figure}
+
+\section{Limite di gas perfetto e diagramma di fase}
+Il comportamento da gas perfetto si recupera nel limite di basse pressioni:
+\begin{equation}
+    \lim_{P \to 0} \frac{PV}{nT} = R = 8.314\,\frac{\text{J}}{\text{mol}\,\text{K}}
+\end{equation}
+Si richiede inoltre $T$ maggiore della temperatura ambiente (\emph{room temperature}); l'ipotesi è un po' confusa, ma si può sostituire con la condizione più precisa $T > T_c$, dove $T_c$ è la temperatura critica. La conversione tra scala Celsius e Kelvin è:
+\begin{equation}
+    T\,[\text{K}] = T\,[^\circ\text{C}] + 273.15
+\end{equation}
+\begin{osservazione}
+    Negli appunti a mano compare $273.16$: questo è il valore in kelvin del punto triplo ($0.01\,^\circ\text{C}$), mentre lo scarto tra le due scale è $273.15$.
+\end{osservazione}
+
+Per un sistema semplice (ad esempio $\text{N}_2$) la regola di Gibbs dà 2 gradi di libertà: lo stato di equilibrio è individuato da 2 parametri, ad esempio $(P, V)$. Nel piano di Clapeyron le isoterme di una sostanza reale hanno il seguente andamento:
+\begin{itemize}
+    \item per $T > T_c$ le isoterme sono simili a iperboli (fluido, comportamento da gas);
+    \item per $T = T_c$ l'isoterma critica presenta un flesso a tangente orizzontale (punto critico);
+    \item per $T < T_c$ si distinguono la zona del liquido sottoraffreddato ($L$, curva molto ripida), la zona di coesistenza liquido-vapore ($L + G$, tratto orizzontale: transizione di fase a $P$ e $T$ costanti) e la zona del gas (vapore surriscaldato, $G$). La campana tratteggiata delimita la zona di coesistenza e unisce i punti di equilibrio al variare di $T$.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1]
+        \draw[->] (0,0) -- (7,0) node[below] {$V$};
+        \draw[->] (0,0) -- (0,4.5) node[left] {$P$};
+        % campana
+        \draw[dashed] (0.6,0.3) .. controls (1,2.5) and (1.8,3) .. (2.3,3) .. controls (2.9,3) and (3.8,2) .. (4.6,0.3);
+        % isoterma T<Tc
+        \draw[thick] (0.5,3.6) .. controls (0.7,2.5) and (0.8,2) .. (1.05,1.6) -- (4,1.6) .. controls (4.8,1.2) and (5.8,0.8) .. (6.6,0.7);
+        \node at (2.5,1.9) {$L+G$};
+        \node at (0.35,2.5) {$L$};
+        \node at (6,1.1) {$G$};
+        \node[right] at (6.6,0.7) {$T$};
+        % isoterma critica
+        \draw[thick] (1.2,4.4) .. controls (1.7,3.2) and (2,3.05) .. (2.3,3) .. controls (3,2.9) and (5,2.4) .. (6.6,2.2) node[right] {$T_c$};
+        % isoterma T>Tc
+        \draw[thick] (2,4.4) .. controls (2.6,3.6) and (4,3.2) .. (6.6,3) node[right] {$T > T_c$};
+        \fill (2.3,3) circle (1.5pt);
+    \end{tikzpicture}
+    \caption{Isoterme di una sostanza reale nel piano di Clapeyron.}
+\end{figure}
+
+Come visto, i gas reali si descrivono con l'equazione di Van der Waals, le cui isoterme per $T < T_c$ presentano un'oscillazione (massimo e minimo locale) nella zona di coesistenza, dove la curva reale è invece piatta:
+\begin{equation}
+    \left(P + \frac{an^2}{V^2}\right)\left(V - nb\right) = nRT
+\end{equation}
+dove il termine $\frac{an^2}{V^2}$ deriva dalle interazioni tra le particelle.
+
+\section{Ancora sulle proprietà dei termometri}
+Le proprietà di un termometro sono: prontezza, sensibilità, risoluzione, precisione, intervallo termometrico e \textbf{accuratezza}. Termometri di materiali diversi (ad esempio ad alcol e a mercurio), tarati negli stessi punti fissi ($0\,^\circ\text{C}$ e $100\,^\circ\text{C}$), non danno in generale la stessa lettura nei punti intermedi: la proprietà termometrica è funzione non lineare della temperatura, e la si usa solo in un intervallo in cui è quasi lineare. Due materiali diversi hanno curve diverse, che coincidono solo nei punti di taratura.
+
+\chapter{Lavoro, Calore e Primo Principio}
+\section{Lavoro in una trasformazione termodinamica}
+Si consideri il sistema $S$ racchiuso da una frontiera (in figura bidimensionale). Su ogni elemento della frontiera agiscono la forza interna $\bar{F}^{int}$, esercitata dal sistema, e la forza esterna $\bar{F}^{est}$, esercitata dall'ambiente. All'equilibrio:
+\begin{equation}
+    \bar{F}^{int} + \bar{F}^{est} \simeq 0
+\end{equation}
+Se la frontiera si sposta, le forze dipendono dal modo in cui si sposta. Nello studio del lavoro interessa solo lo spostamento della frontiera: si trascura $\bar{F}^{int}$ e si considera $\bar{F}^{est}$, perché non si sa cosa succede all'interno del sistema (che durante la trasformazione può non essere in equilibrio).
+
+Se un elemento di frontiera di area $dA$ si sposta di $d\bar{h}$ (dalla posizione $\mathcal{F}(t = 0)$ a $\mathcal{F}(t > 0)$), il lavoro compiuto dal sistema è:
+\begin{align}
+    \delta L &= -\bar{F}^{ext}\cdot d\bar{h} = -\bar{F}^{ext}\cdot d\bar{h}\,\frac{dA}{dA} \\
+    &= \frac{(F^{ext})_n}{dA}\, dh\, dA = \frac{(F^{ext})_n}{dA}\, dV \\
+    &= p\, dV
+\end{align}
+dove $(F^{ext})_n$ è la componente normale della forza esterna (diretta verso l'interno, da cui il segno) e $p$ è la pressione \emph{esterna}. Sommando su tutti gli elementi della frontiera:
+\begin{equation}
+    \delta L = \sum_i \delta L_i = p\, dV \qquad \text{se } p_i = p \text{ (pressione omogenea)}
+\end{equation}
+\begin{osservazione}
+    $\delta L$ non è un differenziale esatto: il lavoro compiuto per andare da uno stato $A$ a uno stato $B$ dipende dal percorso seguito, non solo dagli estremi. Per questo si usa la notazione $\delta L$ e non $dL$.
+\end{osservazione}
+
+Con questa convenzione il lavoro è \textbf{positivo quando è compiuto dal sistema} (espansione, $dV > 0$) e negativo quando è compiuto sul sistema (compressione).
+
+\begin{esempio}[Gas in un cilindro con pistone]
+    Un gas a pressione $p$ è contenuto in un cilindro chiuso da un pistone di area $A$, su cui agisce la pressione esterna $p_0$. Se il pistone si alza di $dh$:
+    \begin{equation}
+        F = p_0 A, \qquad \delta L = F\, dh = p_0 A\, dh = p_0\, dV
+    \end{equation}
+    Se il processo è molto lento (quasi-statico) $p_0 \simeq p$, e quindi $\delta L = p\, dV$ con $p$ la pressione del gas.
+\end{esempio}
+
+\begin{esempio}[Pistone caricato con pallini]
+    Sul pistone, oltre alla pressione atmosferica $p_0$, è posto un carico di massa $m$ formato da tanti pallini, quindi all'equilibrio:
+    \begin{equation}
+        p = p_0 + \frac{mg}{A}
+    \end{equation}
+    \begin{itemize}
+        \item Se i pallini vengono tolti uno alla volta e posati su scaffali posti alle varie altezze raggiunte dal pistone, il gas compie lavoro sollevandoli: il processo è lento e (quasi) reversibile.
+        \item Se i pallini vengono spostati lateralmente tutti alla stessa quota iniziale (o tutti insieme), il gas non compie lavoro utile su di essi: il processo è veloce e irreversibile.
+    \end{itemize}
+    Il concetto di ``velocità'' di una trasformazione non è definito in assoluto: dipende dal confronto con il tempo con cui il sistema torna all'equilibrio (tempo di rilassamento).
+\end{esempio}
+
+\begin{esempio}[Attrito]
+    Se la frontiera del sistema striscia contro una parete con attrito, si genera calore localmente nella zona di contatto: la temperatura del sistema non è omogenea e la trasformazione è irreversibile.
+\end{esempio}
+
+\subsection{Lavoro in una trasformazione quasi-statica}
+Per una trasformazione quasi-statica da $A$ a $B$ la pressione è definita in ogni stato, e il lavoro è l'area sottesa dalla curva nel piano di Clapeyron:
+\begin{equation}
+    L_{AB} = \int_A^B \delta L = \int_A^B p\, dV
+\end{equation}
+La trasformazione può essere pensata come una successione di infiniti piccoli passi (isocore e isobare) che approssimano la curva.
+
+\begin{esempio}[Cicli]
+    Per una trasformazione ciclica il lavoro totale è l'area racchiusa dal ciclo nel piano $(V, P)$:
+    \begin{itemize}
+        \item se il ciclo è percorso in senso \textbf{orario}, $L > 0$: è una \emph{macchina termica} (ciclo motore);
+        \item se il ciclo è percorso in senso \textbf{antiorario}, $L < 0$: è un \emph{frigorifero} (ciclo refrigerante).
+    \end{itemize}
+\end{esempio}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.85]
+        \begin{scope}
+            \draw[->] (0,0) -- (5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3.5) node[left] {$P$};
+            \fill[gray!20] (1,2) .. controls (1.5,3.2) and (3.5,3.2) .. (4,1.5) .. controls (3.5,0.6) and (1.5,0.6) .. (1,2);
+            \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.25 with {\arrow{>}}, mark=at position 0.75 with {\arrow{>}}}] (1,2) .. controls (1.5,3.2) and (3.5,3.2) .. (4,1.5) .. controls (3.5,0.6) and (1.5,0.6) .. (1,2);
+            \node[left] at (1,2) {$A$};
+            \node[right] at (4,1.5) {$B$};
+            \node at (2.5,-0.6) {Ciclo motore ($L > 0$)};
+        \end{scope}
+        \begin{scope}[xshift=7cm]
+            \draw[->] (0,0) -- (5,0) node[below] {$V$};
+            \draw[->] (0,0) -- (0,3.5) node[left] {$P$};
+            \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.25 with {\arrow{<}}, mark=at position 0.75 with {\arrow{<}}}] (1,2) .. controls (1.5,3.2) and (3.5,3.2) .. (4,1.5) .. controls (3.5,0.6) and (1.5,0.6) .. (1,2);
+            \node[left] at (1,2) {$A$};
+            \node[right] at (4,1.5) {$B$};
+            \node at (2.5,-0.6) {Ciclo frigorifero ($L < 0$)};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Verso di percorrenza dei cicli e segno del lavoro.}
+\end{figure}
+
+\begin{esercizio}[Mencuccini 12.5 -- Espansione libera]
+    Un recipiente $A$ contenente gas è collegato tramite un rubinetto a un recipiente $B$ in cui è stato fatto il vuoto. Aprendo il rubinetto il gas si espande riempiendo anche $B$. Poiché il gas si espande contro il vuoto (pressione esterna nulla):
+    \begin{equation}
+        L_{AB} = 0
+    \end{equation}
+    Si tratta di un'\emph{espansione libera}.
+\end{esercizio}
+
+\begin{esercizio}[Mencuccini 12.6 -- Gonfiaggio di un pallone]
+    Un recipiente di gas viene usato per gonfiare un palloncino, inizialmente sgonfio ($V_i = 0\,\ell$), fino a $V_f = 1\,\ell$, contro la pressione atmosferica $p_0 = 1\,\text{atm}$ (trascurando la tensione elastica). Il lavoro compiuto dal gas è:
+    \begin{equation}
+        L_{AB} = p_0 V_f = 1.013 \cdot 10^5\,\frac{\text{N}}{\text{m}^2} \cdot 10^{-3}\,\text{m}^3 = 1.013 \cdot 10^2\,\text{J}
+    \end{equation}
+\end{esercizio}
+
+\section{Dilatazione termica}
+Per piccole variazioni di temperatura il volume di un corpo varia linearmente:
+\begin{equation}
+    V(T) \simeq V(T_0)\left(1 + \beta\Delta T\right) \implies \frac{\Delta V}{V} \simeq \beta\Delta T
+\end{equation}
+dove $\beta$ è il coefficiente di dilatazione volumica. Il volume è una proprietà termodinamica: $V$, $p$, $T$ sono parametri di stato legati dall'equazione di stato, ad esempio per un gas perfetto:
+\begin{equation}
+    pV = nRT \implies V(T, p) = \frac{nRT}{p}
+\end{equation}
+In generale, differenziando $V(T, p)$:
+\begin{equation}
+    dV = \left.\frac{\partial V}{\partial T}\right|_p dT + \left.\frac{\partial V}{\partial p}\right|_T dp
+\end{equation}
+e definendo:
+\begin{equation}
+    \left.\frac{\partial V}{\partial T}\right|_p = \beta V, \qquad \left.\frac{\partial V}{\partial p}\right|_T = -\frac{V}{k}
+\end{equation}
+dove $\beta$ è il coefficiente di dilatazione termica e $\frac{1}{k}$ il coefficiente di compressibilità (isoterma), si ottiene l'\textbf{equazione di stato della dilatazione termica}:
+\begin{equation}
+    dV = V\left(\beta\, dT - \frac{1}{k}\, dp\right)
+\end{equation}
+\begin{osservazione}
+    Esistono sostanze con $\beta < 0$ in certi intervalli di temperatura, ad esempio l'acqua tra $0\,^\circ\text{C}$ e $4\,^\circ\text{C}$.
+\end{osservazione}
+
+Per un materiale isotropo la dilatazione lineare è:
+\begin{equation}
+    \ell(T) = \ell(T_0)\left(1 + \alpha\Delta T\right)
+\end{equation}
+e, poiché $V \propto \ell^3$, al primo ordine $(1 + \alpha\Delta T)^3 \simeq 1 + 3\alpha\Delta T$, da cui:
+\begin{equation}
+    \beta \simeq 3\alpha
+\end{equation}
+
+\begin{esercizio}[Mencuccini 12.7 -- Sbarra vincolata]
+    Una sbarra di sezione $S = 5\,\text{cm}^2$ e lunghezza $\ell$ è fissata tra due pareti rigide e viene scaldata da $T_i = 20\,^\circ\text{C}$ a $T_f = 100\,^\circ\text{C}$. Si vuole la forza $F$ che le pareti devono esercitare perché la lunghezza resti invariata ($\Delta\ell = 0$).
+
+    \textit{Impostazione}: la dilatazione libera sarebbe $\Delta\ell_T = \ell\alpha\Delta T$; la forza deve produrre una compressione elastica uguale e opposta. Per la legge di Hooke $\frac{F}{S} = E\frac{\Delta\ell}{\ell}$, quindi:
+    \begin{equation}
+        F = E S \alpha \Delta T
+    \end{equation}
+    dove $E$ è il modulo di Young e $\alpha$ il coefficiente di dilatazione lineare del materiale della sbarra. Si noti che il risultato non dipende da $\ell$.
+\end{esercizio}
+
+\section{Calore}
+\subsection{Assiomi della termodinamica}
+\begin{itemize}
+    \item[0:] Esiste l'equilibrio per i sistemi macroscopici: due corpi a temperature $T_1 > T_2$ messi a contatto raggiungono una temperatura comune $T_{eq}$. Durante il processo si è spostato del calore $Q$ dal corpo più caldo a quello più freddo.
+\end{itemize}
+
+Come si definisce il calore? Operativamente, il calore è ciò che si misura con un \textbf{calorimetro}, ad esempio il calorimetro a ghiaccio: un corpo a temperatura $T_i$ viene immerso in una miscela di acqua e ghiaccio a $T_0 = 0\,^\circ\text{C}$, e si porta a $T_0$ sciogliendo parte del ghiaccio. Se si scioglie una massa $m_g$ di $\text{H}_2\text{O}_{(s)}$, il calore ceduto dal corpo è:
+\begin{equation}
+    Q = \lambda_g m_g, \qquad \lambda_g = 79.7\,\frac{\text{cal}}{\text{g}} \simeq 333.6\,\frac{\text{J}}{\text{g}}
+\end{equation}
+dove $\lambda_g$ è il calore latente di fusione del ghiaccio e $1\,\text{cal} \simeq 4.186\,\text{J}$.
+
+Cosa è il calore? Non è necessario rispondere per costruire la termodinamica classica: la sua origine microscopica si trova nella meccanica statistica.
+
+\section{Primo principio della termodinamica}
+\subsection{Il mulinello di Joule}
+Il primo principio nasce dall'esperimento del \textbf{mulinello di Joule}. Un recipiente pieno d'acqua, con pareti adiabatiche (che non consentono convezione, conduzione e irraggiamento), contiene un sistema di palette collegato, tramite carrucole, a due masse $\frac{m}{2}$ che scendono sotto l'effetto della gravità. Un termometro misura la temperatura dell'acqua. Il sistema è l'acqua, e la frontiera è la superficie che la racchiude (comprese le palette).
+\begin{itemize}
+    \item Il numero di palette viene aumentato in modo che la velocità limite di discesa delle masse sia bassa al punto giusto.
+    \item L'esperimento deve essere abbastanza veloce da non disperdere calore, ma abbastanza lento da poter misurare il sistema all'equilibrio.
+    \item Si notava che il termometro continuava a salire anche dopo che la massa toccava terra, perché l'acqua continuava a ruotare: parte dell'energia era ancora sotto forma di energia cinetica. Si inserì quindi una doppia massa con un'altra elica, verificando che l'esperimento funzionava.
+\end{itemize}
+Il lavoro compiuto sul sistema dalle palette (attraverso la forza viscosa: le pale spingono e la frontiera si sposta) è negativo secondo la convenzione del sistema, $L_{AB} < 0$, mentre $Q_{AB} = 0$ perché le pareti sono adiabatiche. Si osserva $T_B > T_A$.
+
+Una volta ferme le masse, si riporta il sistema nello stato iniziale $A$ sottraendo calore, misurato con un calorimetro: in questa fase $L_{BA} = 0$ e $Q_{BA} < 0$.
+
+\subsection{Enunciato}
+Con la convenzione:
+\begin{itemize}
+    \item $Q > 0$ se il sistema assorbe calore, $Q < 0$ se lo cede;
+    \item $L > 0$ se il lavoro è compiuto dal sistema, $L < 0$ se è compiuto sul sistema;
+\end{itemize}
+con tutti i metodi possibili (resistenze elettriche [effetto Joule], palette, reazioni chimiche) si ottiene sempre lo stesso rapporto:
+\begin{equation}
+    \frac{L_{AB}}{Q_{BA}} = 4.186\,\frac{\text{J}}{\text{cal}}
+\end{equation}
+cioè, misurando calore e lavoro nelle stesse unità, per ogni trasformazione ciclica:
+\begin{equation}
+    Q - L = 0
+\end{equation}
+
+Si considerino ora due stati $A$ e $B$ e tre trasformazioni: $a$ e $b$ da $A$ a $B$, e $c$ da $B$ ad $A$. Poiché $a + c$ e $b + c$ sono cicli:
+\begin{equation}
+    (Q - L)_a + (Q - L)_c = 0, \qquad (Q - L)_b + (Q - L)_c = 0 \implies (Q - L)_a = (Q - L)_b
+\end{equation}
+Quindi $Q - L$ non dipende dal percorso, ma solo dagli stati iniziale e finale:
+\begin{equation}
+    Q - L = f(A, B)
+\end{equation}
+Fissato uno stato di riferimento $O$, si ha $(Q - L)_{O \to A} = f(O, A)$ e $(Q - L)_{O \to B} = f(O, B)$, e quindi:
+\begin{equation}
+    (Q - L)_{A \to B} = f(O, B) - f(O, A)
+\end{equation}
+Definendo l'\textbf{energia interna} come la funzione di stato $U(S) = f(O, S)$, si ottiene il \textbf{primo principio della termodinamica}:
+\begin{equation}
+    \boxed{Q - L = U(B) - U(A) = \Delta U} \qquad \boxed{\delta Q - \delta L = dU}
+\end{equation}
+Mentre $\delta Q$ e $\delta L$ non sono differenziali esatti, $dU$ lo è.
+
+\subsection{Applicazioni: calorimetria e calore specifico}
+$U$ è un parametro di stato, ad esempio $U = U(V, T)$. Per un materiale incomprimibile, supponendo che non vi siano altre forme di lavoro:
+\begin{equation}
+    \delta L = p\, dV = 0 \implies \Delta U = Q - L = Q
+\end{equation}
+che è la base della calorimetria. Quindi:
+\begin{equation}
+    \frac{dU}{dT} = \frac{\delta Q}{dT}
+\end{equation}
+e si definisce il \textbf{calore specifico}:
+\begin{equation}
+    c = \frac{1}{m}\frac{\delta Q}{dT} = \frac{1}{m}\frac{dU}{dT}
+\end{equation}
+
+\section{Trasformazioni dei gas perfetti}
+\subsection{Trasformazione adiabatica}
+Una trasformazione adiabatica è tale che $Q = 0$; può essere reversibile o irreversibile.
+
+\paragraph{Adiabatica reversibile.} Si consideri un gas perfetto in un cilindro con pareti isolanti, chiuso da un pistone caricato con dei pesetti. Togliendo i pesi uno alla volta (trasformazione quasi-statica) vale:
+\begin{equation}
+    TV^{\gamma - 1} = \text{costante}, \qquad \gamma = \frac{c_p}{c_v} > 1, \qquad c_p - c_v = R
+\end{equation}
+Per un gas monoatomico $\gamma = \frac{5}{3}$, per un gas biatomico $\gamma = \frac{7}{5}$. Equivalentemente $pV^\gamma = \text{costante}$.
+
+\paragraph{Adiabatica irreversibile.} Se invece si tolgono i pesi tutti insieme, la relazione $TV^{\gamma - 1} = \text{cost}$ non vale, perché deriva da:
+\begin{equation}
+    dU = \delta Q - p\, dV, \qquad pV = nRT \implies V\,dp + p\,dV = nR\,dT
+\end{equation}
+che non si possono applicare, dato che il sistema non passa per stati di quasi-equilibrio ($p$ e $T$ non sono definiti durante la trasformazione). In questo caso si usano direttamente i principi (bilancio energetico tra stato iniziale e finale) per risolvere il problema.
+
+\subsection{Trasformazioni politropiche}
+Una trasformazione politropica è una trasformazione reversibile per cui:
+\begin{equation}
+    pV^k = \text{costante}, \qquad k \neq 1
+\end{equation}
+Si introduce anche l'\textbf{entalpia} $H = U + pV$. Il calore specifico molare lungo la politropica (variabile di stato intensiva) è:
+\begin{equation}
+    c_k = \frac{1}{n}\left(\frac{\delta Q}{dT}\right)_k = \frac{1}{n}\left(\frac{dU + p\,dV}{dT}\right)_k = \frac{1}{n}\left(\frac{nc_v\,dT}{dT} + \frac{p\,dV}{dT}\right)_k = \left(c_v + \frac{p\,dV}{n\,dT}\right)_k
+\end{equation}
+Per calcolare $p\,dV$ lungo la politropica:
+\begin{itemize}
+    \item dall'equazione di stato: $p\,dV + V\,dp = nR\,dT$;
+    \item differenziando $pV^k = \text{cost}$: $V^k\,dp + kpV^{k-1}\,dV = 0 \implies V\,dp = -kp\,dV$.
+\end{itemize}
+Sostituendo:
+\begin{equation}
+    p\,dV - kp\,dV = nR\,dT \implies p\,dV = \frac{nR\,dT}{1 - k}
+\end{equation}
+e quindi:
+\begin{equation}
+    \boxed{c_k = c_v + \frac{R}{1 - k}}
+\end{equation}
+\begin{itemize}
+    \item Per $k = 0$ si ha un'\textbf{isobara}: $c_0 = c_v + R = c_p$.
+    \item Per $k = \gamma$ si ha un'\textbf{adiabatica}: $c_\gamma = c_v + \frac{R}{1 - \gamma} = c_v - c_v = 0$ (usando $R = c_v(\gamma - 1)$).
+    \item Per $k \to 1$ si ritrova l'isoterma ($c_k \to \infty$), per $k \to \infty$ l'isocora ($c_k \to c_v$).
+\end{itemize}
+
+\subsection{Trasformazione isoterma reversibile}
+Per un gas perfetto:
+\begin{equation}
+    pV = \text{cost} = nRT
+\end{equation}
+Ogni trasformazione in cui $p$ è definita è reversibile e quindi disegnabile nel piano di Clapeyron. Poiché per un gas perfetto $U$ dipende solo da $T$:
+\begin{equation}
+    dU = \delta Q - p\,dV = 0 \implies \delta Q = p\,dV
+\end{equation}
+\begin{equation}
+    Q_{AB} = \int_A^B \delta Q = \int_A^B p\,dV = \int_A^B \frac{nRT}{V}\,dV = \boxed{nRT\ln\frac{V_B}{V_A}} = L_{AB}
+\end{equation}
+
+\begin{esercizio}[Mencuccini 13.14]
+    $4\,\text{g}$ di elio, inizialmente a $T_A = 27\,^\circ\text{C} = 300\,\text{K}$ e $V_A = 1\,\ell$, subiscono:
+    \begin{enumerate}
+        \item una trasformazione isoterma quasi-statica fino a $V_B = 2V_A$;
+        \item una compressione adiabatica reversibile fino a $p_C = p_A$.
+    \end{enumerate}
+    Determinare a) lo stato finale $C$; b) $L_{AC}$ e $Q_{AC}$.
+
+    \textit{Soluzione.} Il numero di moli è $n = \frac{4\,\text{g}}{4\,\text{g/mol}} = 1$. Lungo l'isoterma:
+    \begin{equation}
+        p_BV_B = nRT_A \implies p_B = \frac{p_A}{2}
+    \end{equation}
+    Lungo l'adiabatica ($\gamma = \frac{5}{3}$, gas monoatomico):
+    \begin{equation}
+        p_BV_B^\gamma = p_CV_C^\gamma \implies V_C = V_B\left(\frac{p_B}{p_C}\right)^{\frac{1}{\gamma}} = 2V_A \cdot 2^{-\frac{3}{5}} = 2^{\frac{2}{5}}V_A \simeq 1.32\,\ell
+    \end{equation}
+    e quindi, essendo $p_C = p_A$:
+    \begin{equation}
+        T_C = T_A\frac{V_C}{V_A} = 2^{\frac{2}{5}}T_A \simeq 396\,\text{K}
+    \end{equation}
+    Il lavoro totale è $L_{AC} = L_{AB} + L_{BC}$. Lungo l'adiabatica $Q_{BC} = 0$, quindi $\Delta U_{BC} = -L_{BC}$:
+    \begin{equation}
+        L_{BC} = -\Delta U_{BC} = nc_v(T_B - T_C), \qquad T_B = T_A
+    \end{equation}
+    \begin{equation}
+        L_{AC} = nRT_A\ln\left(\frac{V_B}{V_A}\right) + nc_v(T_A - T_C) \simeq 1729\,\text{J} - 1196\,\text{J} \simeq 533\,\text{J}
+    \end{equation}
+    Poiché $Q_{AB} = L_{AB}$ (isoterma) e $Q_{BC} = 0$:
+    \begin{equation}
+        Q_{AC} = L_{AB} = nRT_A\ln 2 \simeq 1729\,\text{J}
+    \end{equation}
+    Verifica: $\Delta U_{AC} = Q_{AC} - L_{AC} \simeq 1196\,\text{J} = nc_v(T_C - T_A)$.
+\end{esercizio}
+
+\begin{esercizio}[Mencuccini 13.21]
+    Un cilindro adiabatico è diviso in due compartimenti $A$ (in basso) e $B$ (in alto, chiuso da un pistone mobile, quindi a volume variabile), separati da una parete fissa che lascia passare calore. Ciascun compartimento contiene $n_A = n_B = 2$ moli di gas perfetto monoatomico. Il sistema passa dallo stato di equilibrio a $T_i = 270\,\text{K}$ allo stato di equilibrio a $T_f = 280\,\text{K}$. Determinare il lavoro $L$.
+
+    \textit{Impostazione (dagli appunti).} Il cilindro è adiabatico, quindi $Q = 0$ e dal primo principio:
+    \begin{equation}
+        \Delta U = -L \implies L = -n_Ac_v(T_f - T_i)
+    \end{equation}
+    \begin{osservazione}
+        Negli appunti compare solo $n_A$. Se entrambi i gas passano da $T_i$ a $T_f$, la variazione di energia interna del sistema complessivo è $(n_A + n_B)c_v(T_f - T_i)$: verificare sul testo dell'esercizio quale sia il sistema considerato.
+    \end{osservazione}
+\end{esercizio}
+
+\chapter{Teoria Cinetica dei Gas}
+\section{Interpretazione microscopica delle grandezze termodinamiche}
+La teoria cinetica dei gas si basa sui seguenti assiomi:
+\begin{itemize}
+    \item le molecole sono sfere indeformabili;
+    \item gli urti sono elastici;
+    \item non ci sono interazioni gravitazionali;
+    \item la distribuzione degli atomi è isotropa;
+    \item la distribuzione delle velocità è isotropa.
+\end{itemize}
+
+\subsection{Pressione}
+Si consideri un gas in un contenitore cubico di lato $a$. Una molecola di massa $m$ urta elasticamente la parete perpendicolare a $\hat{u}_x$, con angolo di incidenza uguale all'angolo di riflessione. La variazione di quantità di moto della molecola è:
+\begin{equation}
+    \Delta\bar{q} = m\Delta\bar{v} \implies \Delta q_x = -2mv_x, \qquad \Delta q_y = 0
+\end{equation}
+Il tempo tra due urti successivi sulla stessa parete è $\tau = \frac{2a}{v_x}$, quindi il numero di urti in un intervallo $\Delta t$ è:
+\begin{equation}
+    K = \frac{\Delta t}{\tau} = \frac{\Delta t\, v_x}{2a}
+\end{equation}
+Detta $f_m$ la forza impulsiva che la parete esercita sulla molecola, la forza che la molecola esercita sulla parete è $f_p = -f_m = -m\frac{dv}{dt}$. Integrando su $\Delta t$:
+\begin{equation}
+    \int_{\Delta t} f_m\,dt = \Delta q\, K \implies \int_{\Delta t} f_{p,x}\,dt = -(-2mv_x)\left(\frac{\Delta t\, v_x}{2a}\right) = \frac{\Delta t}{a}mv_x^2
+\end{equation}
+Considerando $N$ molecole, la forza media sulla parete è:
+\begin{equation}
+    \langle F_p\rangle = \frac{1}{\Delta t}\int_{\Delta t} F_p\,dt = \frac{1}{a}\sum_{i = 1}^N mv_{x,i}^2
+\end{equation}
+e quindi la pressione:
+\begin{equation}
+    p = \frac{\langle F_p\rangle}{a^2} = \frac{\sum_i mv_{x,i}^2}{a^3} = \frac{\sum_i mv_{x,i}^2}{V}
+\end{equation}
+Con $N = nN_A$:
+\begin{equation}
+    p = \frac{nN_A}{V}\left(\frac{\sum_i mv_{x,i}^2}{N}\right) = \frac{nN_A}{V}m\langle v_x^2\rangle
+\end{equation}
+Per l'isotropia:
+\begin{equation}
+    \langle v^2\rangle = \langle v_x^2\rangle + \langle v_y^2\rangle + \langle v_z^2\rangle \implies \langle v_x^2\rangle = \langle v_y^2\rangle = \langle v_z^2\rangle = \frac{1}{3}\langle v^2\rangle
+\end{equation}
+da cui:
+\begin{equation}
+    \boxed{p = \frac{nN_A}{3V}m\langle v^2\rangle}
+\end{equation}
+Usando l'equazione dei gas perfetti:
+\begin{equation}
+    \langle v^2\rangle = \frac{3pV}{nN_Am} = \frac{3nRT}{nN_Am} = \frac{3RT}{M}
+\end{equation}
+dove $M = N_Am$ è la massa molare. La \textbf{velocità quadratica media} è quindi $v_{qm} = \sqrt{\frac{3RT}{M}}$.
+\begin{osservazione}
+    Negli appunti a mano compare $v_{qm} \simeq 60\,\text{m/s}$, che è sottostimato: a temperatura ambiente ($T \simeq 300\,\text{K}$) per l'azoto ($M = 28\,\text{g/mol}$) si ha $v_{qm} \simeq 517\,\text{m/s}$, per l'elio ($M = 4\,\text{g/mol}$) $v_{qm} \simeq 1370\,\text{m/s}$.
+\end{osservazione}
+
+\subsection{Temperatura}
+L'energia cinetica media di una molecola è:
+\begin{equation}
+    \langle E_c\rangle = \frac{1}{2}m\langle v^2\rangle = \frac{1}{2}\left(\frac{3pV}{nN_A}\right) = \frac{3}{2}\frac{nRT}{nN_A} = \frac{3}{2}\frac{R}{N_A}T = \frac{3}{2}k_BT
+\end{equation}
+dove $k_B = \frac{R}{N_A}$ è la \textbf{costante di Boltzmann}. La temperatura è quindi una misura dell'energia cinetica media delle molecole. L'energia interna di un gas perfetto monoatomico è:
+\begin{equation}
+    U = nN_A\langle E_c\rangle = nN_A\frac{3}{2}\frac{R}{N_A}T = \frac{3}{2}nRT
+\end{equation}
+e confrontando con $U = nc_vT + \text{cost}$:
+\begin{equation}
+    c_v = \frac{3}{2}R
+\end{equation}
+Scrivendo $U = \frac{1}{2}\cdot 3\, nN_Ak_BT$, si è portati a dire che ogni grado di libertà contribuisce con $\frac{1}{2}k_BT$ (\emph{equipartizione dell'energia}). Questo in generale è \textbf{falso}: ad esempio il calore specifico molare dei solidi tende a $3R$ (legge di Dulong-Petit) solo ad alte temperature, mentre per $T \to 0$ va a zero come $T^3$. La legge vale solo per temperature maggiori della temperatura di Debye $\Theta$, cioè $T/\Theta > 1$.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1]
+        \draw[->] (0,0) -- (6,0) node[below] {$T/\Theta$};
+        \draw[->] (0,0) -- (0,3) node[left] {$c_v$};
+        \draw[dashed] (0,2.4) -- (5.5,2.4);
+        \node[left] at (0,2.4) {$3R$};
+        \draw[thick] (0,0) .. controls (0.8,0.05) and (1.4,0.4) .. (1.8,1.2) .. controls (2.2,2) and (3,2.35) .. (5.5,2.38);
+        \draw (2,0.08) -- (2,-0.08) node[below] {$1$};
+        \node at (0.8,0.6) {$\propto T^3$};
+    \end{tikzpicture}
+    \caption{Andamento del calore specifico molare di un solido in funzione di $T/\Theta$.}
+\end{figure}
+
+\chapter{Secondo Principio della Termodinamica}
+\begin{osservazione}[Ricorda]
+    Il primo principio esprime la conservazione dell'energia e, insieme alle definizioni di sistema e frontiera, permette di definire energia, lavoro e calore.
+\end{osservazione}
+Il secondo principio si applica ovunque; qui ne studiamo le formulazioni per la termodinamica.
+
+\section{A cosa serve il secondo principio}
+\begin{itemize}
+    \item Per i \textbf{chimici}: a prevedere cosa succederà nel futuro partendo dallo stato iniziale, cioè il verso dei processi spontanei.
+    \item Per gli \textbf{ingegneri}: a stabilire la massima efficienza di una macchina.
+    \item Per i \textbf{fisici}: a determinare lo stato di equilibrio finale, che per un sistema isolato è quello di massima entropia.
+\end{itemize}
+\begin{osservazione}
+    A lezione sono stati citati anche altri ambiti: in informatica il \emph{principio di Landauer} (la cancellazione di informazione, come in un'operazione $2 + 1 = 3$ da cui non si può risalire agli operandi, ha un costo termodinamico minimo; il \emph{reversible computing} conserva invece l'informazione) e in biologia, dove gli esseri viventi possono essere definiti come sistemi che, per mantenere i propri processi, abbassano la propria entropia interna (\emph{negentropia}) a spese di un aumento dell'entropia dell'ambiente.
+\end{osservazione}
+
+\section{Processi irreversibili}
+Un processo è irreversibile se l'inversione temporale $t \to -t$ non è valida, cioè se non è possibile ricostruire lo stato iniziale partendo da quello finale.
+
+\begin{esempio}[Diffusione]
+    Una goccia di colorante versata in una piscina si diffonde fino a colorare uniformemente tutta l'acqua. Il filmato del processo mandato all'indietro mostra qualcosa che non avviene mai spontaneamente. La diffusione (a cui è legata la propagazione del calore) è il processo irreversibile per eccellenza: gocce fatte cadere da punti diversi producono lo stesso stato finale, quindi l'evoluzione non è iniettiva e si perde l'informazione sullo stato iniziale.
+\end{esempio}
+
+\section{Enunciati del secondo principio}
+\begin{postulato}[Enunciato di Clausius]
+    È impossibile realizzare una trasformazione termodinamica il cui \emph{unico} risultato sia quello di far passare calore da un corpo più freddo a uno più caldo.
+\end{postulato}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        \begin{scope}
+            \draw (0,3) -- (4,3) node[right] {$T_2$};
+            \draw (0,0) -- (4,0) node[right] {$T_1$};
+            \draw[very thick, -{Latex[length=2.5mm]}] (2,0) -- (2,3) node[midway, right] {$Q$};
+            \draw[thick] (0.8,0.5) -- (3.2,2.5);
+            \draw[thick] (0.8,2.5) -- (3.2,0.5);
+            \node at (2,-0.7) {Impossibile ($T_2 > T_1$)};
+        \end{scope}
+        \begin{scope}[xshift=7.5cm]
+            \draw (0,3) -- (4,3) node[right] {$T_2$};
+            \draw (0,0) -- (4,0) node[right] {$T_1$};
+            \draw (2,1.5) circle (0.45) node {$M$};
+            \draw[very thick, -{Latex[length=2.5mm]}] (2,0) -- (2,1.05) node[midway, right] {$Q_1$};
+            \draw[very thick, -{Latex[length=2.5mm]}] (2,1.95) -- (2,3) node[midway, right] {$Q_2$};
+            \draw[very thick, {Latex[length=2.5mm]}-] (2.45,1.5) -- (3.6,1.5) node[right] {$L < 0$};
+            \node at (2,-0.7) {Frigorifero};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Enunciato di Clausius: il passaggio di calore dal freddo al caldo è possibile solo spendendo lavoro.}
+\end{figure}
+
+Il trasferimento di calore dal freddo al caldo è possibile, ma non come unico risultato: è ciò che fa un \textbf{frigorifero}, che preleva calore dalla sorgente fredda (l'interno del frigo) e lo cede alla sorgente calda (la cucina) a spese di lavoro fornito dall'esterno (la corrente elettrica: si paga la bolletta). Il \emph{sistema} termodinamico è il fluido refrigerante che, dentro la macchina, si espande e si comprime ciclicamente scambiando calore e lavoro attraverso la sua frontiera. Il lavoro del frigorifero è negativo ($L < 0$): è compiuto \emph{sul} sistema. Il frigorifero non è un sistema isolato (riceve energia dall'esterno), ma la macchina compie un ciclo e torna nello stato iniziale, quindi l'enunciato di Clausius non è violato.
+
+\begin{osservazione}
+    ``L'entropia di un sistema isolato non diminuisce'' è una \emph{conseguenza} del secondo principio, non il secondo principio stesso: l'enunciato fondamentale è quello di Clausius (o, equivalentemente, di Kelvin-Planck).
+\end{osservazione}
+
+\begin{postulato}[Enunciato di Kelvin-Planck]
+    È impossibile realizzare una trasformazione termodinamica il cui \emph{unico} risultato sia quello di assorbire calore da una sola sorgente e trasformarlo integralmente in lavoro.
+\end{postulato}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        \draw (0,3) -- (4,3) node[right] {$T_2$};
+        \draw (2,1.5) circle (0.45);
+        \draw[very thick, -{Latex[length=2.5mm]}] (2,3) -- (2,1.95) node[midway, right] {$Q_2$};
+        \draw[very thick, -{Latex[length=2.5mm]}] (2.45,1.5) -- (3.6,1.5) node[right] {$L > 0$};
+        \draw[thick] (1,0.8) -- (3,2.6);
+        \draw[thick] (1,2.6) -- (3,0.8);
+        \node at (2,0.3) {Impossibile};
+    \end{tikzpicture}
+    \caption{Enunciato di Kelvin-Planck: non esiste il motore monotermo.}
+\end{figure}
+
+Storicamente il problema era pratico: l'Ammiragliato britannico, alla fine dell'800, si chiedeva se le navi potessero estrarre energia dall'oceano (a circa $15\,^\circ\text{C}$, uniformemente) senza doversi mai rifornire di combustibile. Kelvin-Planck afferma che non è possibile.
+
+\begin{esempio}[Siringa di calore]
+    Un cilindro diatermico contenente gas, chiuso da un pistone caricato con pesetti e soggetto alla pressione esterna $p_0$, è a contatto con un'unica sorgente a temperatura $T_2$ (il mare). Togliendo i pesetti il gas si espande isotermicamente sollevando il pistone: si estrae lavoro positivo da un'unica sorgente. Questo non viola Kelvin-Planck, perché \emph{non è l'unico risultato}: il gas non torna allo stato iniziale (il pistone resta in alto, e il processo non può continuare indefinitamente). Non si tratta di un ciclo.
+\end{esempio}
+
+Ne segue che il motore termico più semplice possibile ha \textbf{due sorgenti}. Ad esempio, in un motore a scoppio le due temperature sono quella della combustione nel cilindro e quella dell'ambiente (o del radiatore).
+
+\begin{osservazione}
+    Il secondo principio è stato sviluppato storicamente prima del primo, per motivi pratici legati alle macchine.
+\end{osservazione}
+
+\subsection{Equivalenza degli enunciati}
+I due enunciati sono logicamente equivalenti (classica domanda d'esame). Per dimostrarlo si usa:
+\begin{equation}
+    (A \iff B) \iff \left[(A \implies B) \wedge (B \implies A)\right]
+\end{equation}
+insieme alla contrapposizione:
+\begin{equation}
+    (A \implies B) \iff (\neg B \implies \neg A), \qquad (B \implies A) \iff (\neg A \implies \neg B)
+\end{equation}
+Si dimostra quindi che negare un enunciato implica negare l'altro.
+
+\paragraph{$\neg C \implies \neg KP$.} Si supponga di poter violare Clausius: un calore $-Q_1 > 0$ passa spontaneamente dalla sorgente fredda $T_1$ alla sorgente calda $T_2$, senza nient'altro. Si affianchi una macchina $M$ consentita, che lavora tra le due sorgenti: preleva $Q_2 > 0$ da $T_2$, cede $Q_1 < 0$ a $T_1$ e produce lavoro $L > 0$. Per la macchina, su un ciclo:
+\begin{equation}
+    \Delta U = 0 = Q - L \implies L = Q_1 + Q_2 = |Q_2| - |Q_1|
+\end{equation}
+Il calore ceduto a $T_1$ dalla macchina è esattamente quello che viene riportato a $T_2$ violando Clausius. Il risultato netto è che la sorgente $T_1$ non è più necessaria: si ottiene lavoro positivo $L = |Q_2| - |Q_1|$ assorbendo calore dalla sola sorgente $T_2$, violando Kelvin-Planck.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        \draw (0,3) -- (5,3) node[right] {$T_2$};
+        \draw (0,0) -- (5,0) node[right] {$T_1$};
+        \draw[very thick, -{Latex[length=2.5mm]}] (1,0) -- (1,3) node[midway, left] {$-Q_1 > 0$};
+        \draw (3,1.5) circle (0.45) node {$M$};
+        \draw[very thick, -{Latex[length=2.5mm]}] (3,3) -- (3,1.95) node[midway, right] {$Q_2$};
+        \draw[very thick, -{Latex[length=2.5mm]}] (3,1.05) -- (3,0) node[midway, right] {$Q_1$};
+        \draw[very thick, -{Latex[length=2.5mm]}] (3.45,1.5) -- (4.6,1.5) node[right] {$L > 0$};
+    \end{tikzpicture}
+    \caption{Violando Clausius si costruisce un motore monotermo, violando Kelvin-Planck.}
+\end{figure}
+
+\paragraph{$\neg KP \implies \neg C$.} Si supponga di poter violare Kelvin-Planck: una macchina $M$ assorbe calore $Q_1$ dalla sorgente fredda $T_1$ e lo trasforma integralmente in lavoro $L = Q_1 > 0$. Questo lavoro può essere trasformato interamente in calore su una qualsiasi sorgente (ad esempio facendo cadere un peso, o per attrito), in particolare cedendolo come calore $Q_2 = L$ alla sorgente calda $T_2$. La macchina torna allo stato iniziale e il risultato netto è il passaggio di calore $Q_1$ dalla sorgente fredda alla calda senza nient'altro: violazione di Clausius.
+
+\begin{osservazione}
+    Il lavoro meccanico può sempre essere trasformato integralmente in calore (es. una massa che cade e si ferma per attrito); è l'opposto che è vietato. Per Kelvin-Planck, una macchina ciclica a contatto con una sola sorgente deve avere:
+    \begin{equation}
+        \Delta U = 0 \implies L = Q, \qquad L \leq 0, \quad Q \leq 0
+    \end{equation}
+    cioè può solo assorbire lavoro e cedere calore. La parola ``integralmente'' nell'enunciato è importante: in generale una parte del calore può essere ceduta a un'altra sorgente più fredda.
+\end{osservazione}
+
+\section{Il ciclo di Carnot}
+Il caso più semplice di motore termico è il motore reversibile che lavora tra due sorgenti: il \textbf{ciclo di Carnot}. Può essere realizzato con qualsiasi sistema; storicamente Carnot lo studiò con un gas perfetto. Per un gas perfetto il ciclo è composto da:
+\begin{enumerate}
+    \item $A \to B$: espansione isoterma reversibile a $T_2$ (nell'ingegneria: turbina);
+    \item $B \to C$: espansione adiabatica reversibile da $T_2$ a $T_1$;
+    \item $C \to D$: compressione isoterma reversibile a $T_1$ (pompa / compressione);
+    \item $D \to A$: compressione adiabatica reversibile da $T_1$ a $T_2$.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.1]
+        \draw[->] (0,0) -- (7,0) node[below] {$V$};
+        \draw[->] (0,0) -- (0,4.5) node[left] {$P$};
+        \coordinate (A) at (1.2,4);
+        \coordinate (B) at (3.4,2.6);
+        \coordinate (C) at (6,0.9);
+        \coordinate (D) at (2.6,1.6);
+        \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Latex}}}] (A) .. controls (2,3.1) and (2.7,2.75) .. (B);
+        \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Latex}}}] (B) .. controls (4.2,1.6) and (5,1.1) .. (C);
+        \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Latex}}}] (C) .. controls (4.6,1.1) and (3.4,1.35) .. (D);
+        \draw[thick, postaction={decorate}, decoration={markings, mark=at position 0.55 with {\arrow{Latex}}}] (D) .. controls (2,2.4) and (1.5,3.3) .. (A);
+        \draw[dashed, gray] (B) .. controls (4.5,2.2) and (5.5,2) .. (6.6,1.85) node[right] {$T_2$};
+        \draw[dashed, gray] (C) -- (6.6,0.82) node[right] {$T_1$};
+        \fill (A) circle (1.5pt) node[above left] {$A$};
+        \fill (B) circle (1.5pt) node[above right] {$B$};
+        \fill (C) circle (1.5pt) node[below] {$C$};
+        \fill (D) circle (1.5pt) node[below left] {$D$};
+        \node at (2.9,3.5) {$Q_{AB} > 0$};
+        \node at (4.3,0.7) {$Q_{CD} < 0$};
+    \end{tikzpicture}
+    \caption{Ciclo di Carnot per un gas perfetto nel piano di Clapeyron.}
+\end{figure}
+
+Il calore viene scambiato solo lungo le isoterme (le altre due trasformazioni sono adiabatiche). Per un gas perfetto lungo un'isoterma $\Delta U = 0$, quindi:
+\begin{equation}
+    \Delta U_{AB} = Q_{AB} - L_{AB} = 0 \implies Q_{AB} = L_{AB} > 0
+\end{equation}
+perché $L_{AB}$ è l'area positiva sotto l'espansione: il calore entra nel sistema. Per lo stesso motivo, lungo la compressione isoterma:
+\begin{equation}
+    Q_{CD} = L_{CD} < 0
+\end{equation}
+
+\begin{osservazione}[Il ciclo di Carnot nell'industria]
+    I motori a scoppio non usano il ciclo di Carnot, ma i cicli Otto e Diesel. Un'applicazione industriale molto diffusa di un ciclo di tipo Carnot è invece nelle centrali (ad esempio nucleari): il nucleo viene raffreddato con acqua, che evapora (espandendosi e compiendo lavoro in turbina) e poi ricondensa a contatto con l'acqua di un lago o di un fiume. Le due temperature sono mantenute costanti dalle transizioni di fase dell'acqua (ebollizione e condensazione).
+\end{osservazione}
+
+\subsection{Rendimento di una macchina termica}
+Il lavoro su un ciclo è la somma dei lavori delle singole trasformazioni (il lavoro è una grandezza estensiva):
+\begin{equation}
+    L = \oint \delta L = L_{AB} + L_{BC} + L_{CD} + L_{DA}
+\end{equation}
+Se si dividesse per il calore totale scambiato si otterrebbe sempre 1 (perché su un ciclo $L = Q$), quindi il \textbf{rendimento} (o efficienza) di una macchina termica si definisce dividendo per il solo calore \emph{assorbito}, perché lo scopo originale è trasformare calore in lavoro:
+\begin{equation}
+    \eta = \frac{L}{Q_{ass}}
+\end{equation}
+Per una macchina che lavora tra due sorgenti, con $Q_2 = Q_{AB} > 0$ assorbito a $T_2$ e $Q_1 = Q_{CD} < 0$ ceduto a $T_1$:
+\begin{equation}
+    \boxed{\eta = \frac{L}{Q_{ass}} = \frac{Q_1 + Q_2}{Q_2} = 1 + \frac{Q_1}{Q_2} = 1 - \left|\frac{Q_1}{Q_2}\right|}
+\end{equation}
+Se si riuscisse a costruire il motore monotermo vietato da Kelvin-Planck ($Q_1 = 0$), si avrebbe $\eta = 1$. Il calcolo esplicito per il ciclo di Carnot verrà svolto nella prossima lezione.
+
+\chapter{Miscele di Gas}
+\section{Legge di Dalton}
+Si consideri un contenitore di volume $V$ a temperatura $T$ in cui si inseriscono $n_1$ moli di un gas (es. $\text{O}_2$), $n_2$ moli di un altro gas (es. $\text{H}_2$), e così via. Nel modello di gas perfetto non ci sono interazioni tra le particelle (le molecole interagiscono principalmente con le pareti, che fissano la temperatura comune), quindi ciascun gas si comporta come se fosse da solo nel contenitore:
+\begin{equation}
+    p_1V = n_1RT, \qquad p_2V = n_2RT, \qquad \dots, \qquad p_NV = n_NRT
+\end{equation}
+dove $p_i$ è la \textbf{pressione parziale} dell'$i$-esimo gas, che non dipende dagli altri. La pressione totale misurata è la somma delle pressioni parziali:
+\begin{equation}
+    \boxed{p = \sum_{i = 1}^N p_i = \frac{\sum_{i = 1}^N n_iRT}{V}}
+\end{equation}
+cioè ogni pressione parziale è proporzionale al corrispondente numero di moli: $p_i = \frac{n_i}{n}\,p$, con $n = \sum_i n_i$.
+
+\end{document}

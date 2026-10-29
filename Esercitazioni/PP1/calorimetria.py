@@ -1,17 +1,5 @@
-"""
-Calorimetria: misura del calore specifico di alcuni materiali.
-
-Inserisci i tuoi dati nella sezione "DATI" (i valori presenti sono SOLO di esempio).
-Unità: masse in g, temperature in °C, calori specifici in cal/(g K).
-
-Nota sulle incertezze: l'errore su M_e è COMUNE a tutte le misure (sistematico),
-quindi non si riduce mediando. Lo script lo tratta separatamente dall'errore
-"statistico" (bilancia + termometro):
-    - sigma_stat : propagazione degli errori di lettura, si riduce con la media
-    - sigma_sys  : effetto di M_e +- sigma_Me, uguale per tutte le misure
-"""
-
 import numpy as np
+import matplotlib.pyplot as plt
 
 # ----------------------------------------------------------------------------
 # PARAMETRI SPERIMENTALI
@@ -19,140 +7,167 @@ import numpy as np
 CA = 1.0          # cal/(g K), calore specifico dell'acqua
 ME = 25.0         # g, massa equivalente del thermos
 SIGMA_ME = 5.0    # g
-SIGMA_M = 0.1     # g, risoluzione bilancia (modifica se diversa)
-SIGMA_T = 0.1     # °C, incertezza termometro (es. mezza divisione)
+SIGMA_M = np.sqrt((0.1/np.sqrt(12))**2 + (0.3)**2)     # g, risoluzione bilancia + linearity
+SIGMA_T = np.sqrt((0.2/np.sqrt(12))**2 + (1)**2)  # °C, incertezza termometro + accuracy del termometro
 
-# Valori di riferimento (letteratura, indicativi)
-C_ATTESI = {"alluminio": 0.215, "ottone": 0.092, "granito": 0.19, "okite": 0.20}
+C_ATTESI = {"okite": 0.20, "alluminio": 0.215, "ottone": 0.092, "granito": 0.19}  # cal/(g K), valori di riferimento
 
-# ----------------------------------------------------------------------------
-# DATI  (sostituisci con i tuoi)
-# ----------------------------------------------------------------------------
-# m1 (corpo), T1 (corpo caldo), ma (acqua fredda), Ta, Tf
-# masse dei campioni: NON presenti nelle tabelle, inseriscile tu
-M_OKITE = 137.9      # g
-M_ALLUMINIO = 78.9  # g
-
-# ----------------------------------------------------------------------------
-# DATI
-# ----------------------------------------------------------------------------
-# m1 (corpo), ma (acqua fredda), Ta, T1 (corpo caldo), Tf
 M_OKITE = 137.9      # g
 M_ALLUMINIO = 78.9   # g
-M_OTTONE = 194.8   # g
-M_GRANITO = 38.0   # g
+M_OTTONE = 194.8     # g
+M_GRANITO = 38.0     # g
 
-misure_c = {
-    "okite": [
-        dict(m1=M_OKITE, ma=200.5, Ta=26.8, T1=64.6, Tf=30.6),
-        dict(m1=M_OKITE, ma=199.7, Ta=25.0, T1=62.8, Tf=29.0),
-    ],
-    "alluminio": [
-        dict(m1=M_ALLUMINIO, ma=200.5, Ta=24.9, T1=61.8, Tf=27.4),
-        dict(m1=M_ALLUMINIO, ma=202.5, Ta=25.5, T1=64.4, Tf=28.3),
-        dict(m1=M_ALLUMINIO, ma=204.7, Ta=24.4, T1=63.2, Tf=27.1),
-        dict(m1=M_ALLUMINIO, ma=200.8, Ta=23.8, T1=63.9, Tf=26.7),
-        dict(m1=M_ALLUMINIO, ma=201.1, Ta=25.0, T1=63.5, Tf=27.9),
-    ],
-    "ottone": [
-        dict(m1=M_OTTONE, ma=202.8, Ta=24.8, T1=62.8, Tf=27.6),
-        dict(m1=M_OTTONE, ma=199.6, Ta=25.0, T1=61.4, Tf=28.0),
-    ],
-    "granito": [
-        dict(m1=M_GRANITO, ma=201.5, Ta=25.2, T1=64.2, Tf=26.5),
-        dict(m1=M_GRANITO, ma=200.7, Ta=24.8, T1=66.0, Tf=26.1),
-        dict(m1=M_GRANITO, ma=200.8, Ta=25.6, T1=65.0, Tf=27.6),
-        dict(m1=M_GRANITO, ma=201.0, Ta=25.0, T1=65.8, Tf=26.9)
-    ],
-}
+materiale = ["okite",
+             "okite",
+             "alluminio",
+             "alluminio",
+             "alluminio",
+             "alluminio",
+             "alluminio",
+             "ottone",
+             "ottone",
+             "granito",
+             "granito",
+             "granito",
+             "granito"]
 
+m1 = [M_OKITE,
+      M_OKITE,
+      M_ALLUMINIO,
+      M_ALLUMINIO,
+      M_ALLUMINIO,
+      M_ALLUMINIO,
+      M_ALLUMINIO,
+      M_OTTONE,
+      M_OTTONE,
+      M_GRANITO,
+      M_GRANITO,
+      M_GRANITO,
+      M_GRANITO]
 
-# ----------------------------------------------------------------------------
-# FORMULA
-# ----------------------------------------------------------------------------
-def calore_specifico(m1, T1, ma, Ta, Tf, Me=ME):
-    """Eq. (3): c1 = ca (ma + Me)(Tf - Ta) / [m1 (T1 - Tf)]"""
-    return CA * (ma + Me) * (Tf - Ta) / (m1 * (T1 - Tf))
+ma = [200.5,
+      199.7,
+      200.5,
+      202.5,
+      204.7,
+      200.8,
+      201.1,
+      202.8,
+      199.6,
+      201.5,
+      200.7,
+      200.8,
+      201.0]
 
+Ta = [26.8,
+      25.0,
+      24.9,
+      25.5,
+      24.4,
+      23.8,
+      25.0,
+      24.8,
+      25.0,
+      25.2,
+      24.8,
+      25.6,
+      25.0]
 
-# ----------------------------------------------------------------------------
-# PROPAGAZIONE DEGLI ERRORI
-# ----------------------------------------------------------------------------
-def propaga(f, valori, sigme, h=1e-6):
-    """
-    Propagazione per variabili indipendenti con derivate numeriche centrali.
-    Restituisce (valore, sigma, contributi) con contributi[k] = |df/dx_k| * sigma_k.
-    """
-    f0 = f(**valori)
-    contributi = {}
-    for k, s in sigme.items():
-        if s == 0:
-            continue
-        step = h * max(abs(valori[k]), 1.0)
-        su = dict(valori, **{k: valori[k] + step})
-        giu = dict(valori, **{k: valori[k] - step})
-        derivata = (f(**su) - f(**giu)) / (2 * step)
-        contributi[k] = abs(derivata) * s
-    sigma = np.sqrt(sum(c**2 for c in contributi.values()))
-    return f0, sigma, contributi
+T1 = [64.6,
+      62.8,
+      61.8,
+      64.4,
+      63.2,
+      63.9,
+      63.5,
+      62.8,
+      61.4,
+      64.2,
+      66.0,
+      65.0,
+      65.8]
 
+Tf = [30.6,
+      29.0,
+      27.4,
+      28.3,
+      27.1,
+      26.7,
+      27.9,
+      27.6,
+      28.0,
+      26.5,
+      26.1,
+      27.6,
+      26.9]
 
-def sigme_lettura(misura):
-    """Errori di lettura: SIGMA_M sulle masse, SIGMA_T sulle temperature."""
-    return {k: (SIGMA_M if k.startswith("m") else SIGMA_T) for k in misura}
+ESCLUSE = [12, 13]
+#ESCLUSE = [10, 11]
+#ESCLUSE = []
 
+c = []
+sigma_stats = []
+mat = []
 
-def sistematico_Me(misure, Me, sigma_Me):
-    """Effetto di M_e sulla media: semi-differenza fra le medie a Me +- sigma_Me."""
-    alto = np.mean([calore_specifico(**m, Me=Me + sigma_Me) for m in misure])
-    basso = np.mean([calore_specifico(**m, Me=Me - sigma_Me) for m in misure])
-    return abs(alto - basso) / 2
+for i in range(len(m1)):
+    if i + 1 in ESCLUSE:
+        continue
+    c.append(CA * (ma[i] + ME) * (Tf[i] - Ta[i]) / (m1[i] * (T1[i] - Tf[i])))
+    sigma_stats.append(np.sqrt((CA * (Tf[i] - Ta[i])/(m1[i] * (T1[i] - Tf[i])) * SIGMA_M)**2 +              # m_a
+                       (c[-1]/m1[i] * SIGMA_M)**2 +                                                           # m_1
+                       (CA * (ma[i] + ME)/(m1[i] * (T1[i] - Tf[i])) * SIGMA_T)**2 +                           # T_a
+                       (c[-1]/(T1[i] - Tf[i]) * SIGMA_T)**2 +                                                 # T_1
+                       (CA * (ma[i] + ME) * (T1[i] - Ta[i])/(m1[i] * (T1[i] - Tf[i])**2) * SIGMA_T)**2 +      # T_f
+                       (CA * (Tf[i] - Ta[i])/(m1[i] * (T1[i] - Tf[i])) * SIGMA_ME)**2
+                       ))
+    mat.append(materiale[i])
+    print(f"Misura {i+1} ({materiale[i]}): c = {c[-1]:.3f} ± {sigma_stats[-1]:.3f}")
 
+# media pesata per materiale: pesi 1/sigma_stat^2, l'errore su Me è comune a tutte le misure e non si riduce
+c = np.array(c)
+sigma_stats = np.array(sigma_stats)
+mat = np.array(mat)
 
-# ----------------------------------------------------------------------------
-# ANALISI
-# ----------------------------------------------------------------------------
-def analizza(materiale, misure, Me=ME, sigma_Me=SIGMA_ME, atteso=None):
-    print(f"\n=== calore specifico {materiale} ===")
-    valori, sigme_stat = [], []
-    for i, m in enumerate(misure, 1):
-        v, s, contr = propaga(lambda **kw: calore_specifico(**kw, Me=Me), m, sigme_lettura(m))
-        _, _, c_me = propaga(lambda Me_: calore_specifico(**m, Me=Me_),
-                             {"Me_": Me}, {"Me_": sigma_Me})
-        dominante = max(contr, key=contr.get)
-        print(f"  misura {i}: {v:.4f} ± {s:.4f} (stat) ± {c_me['Me_']:.4f} (Me) cal/(g K)"
-              f"   [errore di lettura dominante: {dominante}]")
-        valori.append(v)
-        sigme_stat.append(s)
+for nome in C_ATTESI:
+    sel = mat == nome
+    w = 1/sigma_stats[sel]**2
+    media = np.sum(w * c[sel]) / np.sum(w)
+    s_media = 1/np.sqrt(np.sum(w))
+    print(f"Media {nome}: c = {media:.3f} ± {s_media:.3f} (stat) | scarto dal valore atteso: {abs(media - C_ATTESI[nome])/s_media:.1f} sigma")
 
-    valori, sigme_stat = np.array(valori), np.array(sigme_stat)
-    n = len(valori)
+# istrogramma dell'alluminio con gaussiana sovrapposta
+alum = c[mat == "alluminio"]
 
-    # media pesata con gli errori statistici
-    w = 1 / sigme_stat**2
-    media = np.sum(w * valori) / np.sum(w)
-    s_media = 1 / np.sqrt(np.sum(w))
-    s_sys = sistematico_Me(misure, Me, sigma_Me)
-    s_tot = np.hypot(s_media, s_sys)
+for bin in range(1, 10):
+      
+      plt.hist(alum, bins=bin, alpha=0.7, label="Alluminio")
+      plt.xlabel("Calore specifico")
+      plt.ylabel("Frequenza")
+      plt.title("Distribuzione della calore specifico dell'alluminio")
+      
+      plt.legend()
+      plt.savefig(f"Img/alluminumIsto_bin{bin}_no-gauss.png")
+      plt.close()
+      
+      plt.hist(alum, bins=bin, alpha=0.7, label="Alluminio")
+      plt.xlabel(r"Calore specifico $\left(\frac{cal}{g \cdot K}\right)$")
+      plt.ylabel("Frequenza")
+      plt.title("Distribuzione della calore specifico dell'alluminio")
+      
+      gauss = np.linspace(min(alum), max(alum), 100)
+      media = np.mean(alum)
+      sigma = np.std(alum, ddof=1)
+      plt.plot(gauss, len(alum) * (max(alum) - min(alum)) / bin * (1/(sigma * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((gauss - media)/sigma)**2), color="red", label="Gaussiana")
+      
+      plt.legend()
+      plt.savefig(f"Img/alluminumIsto_bin{bin}.png")
+      plt.close()
+      #plt.show()
+      
+#calcolo del chi quadro per l'alluminio
+sel = mat == "alluminio"
+media = np.sum(c[sel]/sigma_stats[sel]**2)/np.sum(1/sigma_stats[sel]**2)
+chi2 = np.sum(((c[sel] - media)/sigma_stats[sel])**2)
+ndof = np.sum(sel) - 1
 
-    print(f"  media pesata: {media:.4f} ± {s_media:.4f} (stat) ± {s_sys:.4f} (Me)"
-          f" = {media:.4f} ± {s_tot:.4f} cal/(g K)")
-
-    if n >= 3:
-        dev_std = np.std(valori, ddof=1)
-        print(f"  dispersione: dev. std = {dev_std:.4f}, dev. std media = {dev_std/np.sqrt(n):.4f}"
-              f"  |  errore propagato medio = {np.mean(sigme_stat):.4f}")
-        chi2 = np.sum(((valori - media) / sigme_stat) ** 2)
-        print(f"  chi2 = {chi2:.2f} con {n-1} gdl  "
-              f"({'dispersione compatibile' if chi2 < 2*(n-1) else 'dispersione > errori stimati'})")
-
-    if atteso is not None:
-        z = abs(media - atteso) / s_tot
-        print(f"  atteso {atteso} cal/(g K) -> scarto = {z:.1f} sigma")
-    return media, s_tot
-
-
-if __name__ == "__main__":
-    print(f"Massa equivalente assunta: Me = {ME:.1f} ± {SIGMA_ME:.1f} g")
-    for materiale, misure in misure_c.items():
-        analizza(materiale, misure, atteso=C_ATTESI.get(materiale))
+print(f"Chi quadro per l'alluminio: {chi2:.3f} con {ndof} gradi di libertà")
