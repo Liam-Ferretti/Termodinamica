@@ -48,6 +48,9 @@ p_0 = 100.97
 
 pressioni = np.zeros(6)
 
+m = []
+c = []
+
 for i in range(1, 5):
         
     file = f"8/8-{i}"
@@ -91,6 +94,9 @@ for i in range(1, 5):
     y = delta_V / V_0
         
     a, b = np.polyfit(x, y, 1)
+    
+    m.append(a)
+    c.append(b)
 
     x_fit = np.linspace(x.min(), x.max(), 100)
     y_fit = a * x_fit + b
@@ -106,3 +112,12 @@ for i in range(1, 5):
     plt.savefig(f"{file}_fit_lineare.png", dpi=300)
 
     plt.show()
+    
+plt.scatter(m, c, label="Dati sperimentali")
+
+plt.title("Confronto dei coefficienti lineari")
+plt.xlabel("m")
+plt.ylabel("c")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
