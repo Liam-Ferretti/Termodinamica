@@ -1,5 +1,5 @@
 Temperatura, Can B, 7.1
-Tempo ( s )	Temperatura ( °C )
+Tempo ( s )	Temperatura ( ï¿½C )
 0,0000	58,6116
 0,0200	58,7083
 0,0400	58,6116
