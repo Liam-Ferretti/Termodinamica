@@ -3,6 +3,7 @@ import numpy as np
 # ----------------------------------------------------------------------------
 # PARAMETRI SPERIMENTALI
 # ----------------------------------------------------------------------------
+
 SIGMA_M = np.sqrt((0.1/np.sqrt(12))**2 + (0.3)**2)     # g, risoluzione bilancia + linearity
 SIGMA_T = np.sqrt((0.2/np.sqrt(12))**2 + (1)**2)  # °C, incertezza termometro + accuracy del termometro
 
