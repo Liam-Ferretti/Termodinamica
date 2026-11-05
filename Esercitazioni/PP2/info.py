@@ -9,8 +9,11 @@ import numpy as np
 
 risoluzione_pressione_CI6534 = 0.005  # kPa
 risoluzione_temperatura_CI6605 = 0.05  # °C
-raggio_puleggia_media_CI6538 = 14.5  # mm
+
+raggio_puleggia_media_CI6538 = 48/2  # mm
 risoluzione_posizione_CI6538 = 2 * np.pi * raggio_puleggia_media_CI6538 / 1440  # mm
+
+print(risoluzione_posizione_CI6538)
 risoluzione_massa_FCB3K01 = 0.1 # g
 
 accuracy_pressione_CI6534 = 0.102
@@ -18,7 +21,7 @@ accuracy_temperatura_CI6605 = 0.5
 accuracy_posizione_CI6538 = 0
 accuracy_massa_FCB3K01 = 0.3 # g
 
-sigma_b_pressione_CI6534 = np.sqrt(risoluzione_pressione_CI6534**2 + accuracy_pressione_CI6534**2)
-sigma_b_temperatura_CI6605 = np.sqrt(risoluzione_temperatura_CI6605**2 + accuracy_temperatura_CI6605**2)
-sigma_b_posizione_CI6538 = np.sqrt(risoluzione_posizione_CI6538**2 + accuracy_posizione_CI6538**2)
-sigma_b_massa_FCB3K01 = np.sqrt(risoluzione_massa_FCB3K01**2 + accuracy_massa_FCB3K01**2)
+sigma_b_pressione_CI6534 = np.sqrt((risoluzione_pressione_CI6534 / np.sqrt(12))**2 + accuracy_pressione_CI6534**2)
+sigma_b_temperatura_CI6605 = np.sqrt((risoluzione_temperatura_CI6605 / np.sqrt(12))**2 + accuracy_temperatura_CI6605**2)
+sigma_b_posizione_CI6538 = np.sqrt((risoluzione_posizione_CI6538 / np.sqrt(12))**2 + accuracy_posizione_CI6538**2)
+sigma_b_massa_FCB3K01 = np.sqrt((risoluzione_massa_FCB3K01 / np.sqrt(12))**2 + accuracy_massa_FCB3K01**2)
